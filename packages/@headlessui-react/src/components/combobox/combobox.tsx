@@ -1182,6 +1182,7 @@ export type ComboboxOptionsProps<TTag extends ElementType = typeof DEFAULT_OPTIO
     portal?: boolean
     modal?: boolean
     transition?: boolean
+    inertEnabled?: boolean
   }
 >
 
@@ -1197,6 +1198,7 @@ function OptionsFn<TTag extends ElementType = typeof DEFAULT_OPTIONS_TAG>(
     portal = false,
     modal = true,
     transition = false,
+    inertEnabled = true,
     ...theirProps
   } = props
   let machine = useComboboxMachineContext('Combobox.Options')
@@ -1253,7 +1255,8 @@ function OptionsFn<TTag extends ElementType = typeof DEFAULT_OPTIONS_TAG>(
   useScrollLock(scrollLockEnabled, ownerDocument)
 
   // Mark other elements as inert when the combobox is visible, and `modal` is enabled
-  let inertOthersEnabled = data.__demoMode ? false : modal && comboboxState === ComboboxState.Open
+  let inertOthersEnabled =
+    data.__demoMode || !inertEnabled ? false : modal && comboboxState === ComboboxState.Open
   useInertOthers(inertOthersEnabled, {
     allowed: useCallback(
       () => [inputElement, buttonElement, optionsElement],

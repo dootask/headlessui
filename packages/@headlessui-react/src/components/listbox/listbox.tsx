@@ -546,6 +546,7 @@ export type ListboxOptionsProps<TTag extends ElementType = typeof DEFAULT_OPTION
     portal?: boolean
     modal?: boolean
     transition?: boolean
+    inertEnabled?: boolean
   } & PropsForFeatures<typeof OptionsRenderFeatures>
 >
 
@@ -560,6 +561,7 @@ function OptionsFn<TTag extends ElementType = typeof DEFAULT_OPTIONS_TAG>(
     portal = false,
     modal = true,
     transition = false,
+    inertEnabled = true,
     ...theirProps
   } = props
   let anchor = useResolvedAnchor(rawAnchor)
@@ -605,7 +607,8 @@ function OptionsFn<TTag extends ElementType = typeof DEFAULT_OPTIONS_TAG>(
   useScrollLock(scrollLockEnabled, ownerDocument)
 
   // Mark other elements as inert when the listbox is visible, and `modal` is enabled
-  let inertOthersEnabled = __demoMode ? false : modal && listboxState === ListboxStates.Open
+  let inertOthersEnabled =
+    __demoMode || !inertEnabled ? false : modal && listboxState === ListboxStates.Open
   useInertOthers(inertOthersEnabled, {
     allowed: useCallback(() => [buttonElement, optionsElement], [buttonElement, optionsElement]),
   })

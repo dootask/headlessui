@@ -361,7 +361,7 @@ export type MenuItemsProps<TTag extends ElementType = typeof DEFAULT_ITEMS_TAG> 
     portal?: boolean
     modal?: boolean
     transition?: boolean
-
+    inertEnabled?: boolean
     // ItemsRenderFeatures
     static?: boolean
     unmount?: boolean
@@ -379,6 +379,7 @@ function ItemsFn<TTag extends ElementType = typeof DEFAULT_ITEMS_TAG>(
     portal = false,
     modal = true,
     transition = false,
+    inertEnabled = true,
     ...theirProps
   } = props
   let anchor = useResolvedAnchor(rawAnchor)
@@ -432,7 +433,8 @@ function ItemsFn<TTag extends ElementType = typeof DEFAULT_ITEMS_TAG>(
   useScrollLock(scrollLockEnabled, ownerDocument)
 
   // Mark other elements as inert when the menu is visible, and `modal` is enabled
-  let inertOthersEnabled = __demoMode ? false : modal && menuState === MenuState.Open
+  let inertOthersEnabled =
+    __demoMode || !inertEnabled ? false : modal && menuState === MenuState.Open
   useInertOthers(inertOthersEnabled, {
     allowed: useCallback(
       () => [buttonElement, localItemsElement],
