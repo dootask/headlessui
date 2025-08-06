@@ -128,6 +128,7 @@ let InternalDialog = forwardRefWithAs(function InternalDialog<
     initialFocus,
     role = 'dialog',
     autoFocus = true,
+    inertEnabled = true,
     __demoMode = false,
     unmount = false,
     ...theirProps
@@ -203,7 +204,7 @@ let InternalDialog = forwardRefWithAs(function InternalDialog<
     usesOpenClosedState !== null ? (usesOpenClosedState & State.Closing) === State.Closing : false
 
   // Ensure other elements can't be interacted with
-  let inertOthersEnabled = __demoMode ? false : isClosing ? false : enabled
+  let inertOthersEnabled = __demoMode || !inertEnabled ? false : isClosing ? false : enabled
   useInertOthers(inertOthersEnabled, {
     allowed: useEvent(() => [
       // Allow the headlessui-portal of the Dialog to be interactive. This
@@ -370,6 +371,7 @@ export type DialogProps<TTag extends ElementType = typeof DEFAULT_DIALOG_TAG> = 
     role?: 'dialog' | 'alertdialog'
     autoFocus?: boolean
     transition?: boolean
+    inertEnabled?: boolean
     __demoMode?: boolean
   }
 >
