@@ -2,4 +2,4 @@
 
 1. 修改 package.json 中的版本号
 2. npm run build
-3. npm run publish
+3. npm publish --access public

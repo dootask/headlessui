@@ -129,6 +129,8 @@ let InternalDialog = forwardRefWithAs(function InternalDialog<
     role = 'dialog',
     autoFocus = true,
     inertEnabled = true,
+    closeOnClickOutside = true,
+    closeOnEscape = true,
     __demoMode = false,
     unmount = false,
     ...theirProps
@@ -237,13 +239,13 @@ let InternalDialog = forwardRefWithAs(function InternalDialog<
   )
 
   // Close Dialog on outside click
-  useOutsideClick(isTopLayer, resolveRootContainers, (event) => {
+  useOutsideClick(closeOnClickOutside && isTopLayer, resolveRootContainers, (event) => {
     event.preventDefault()
     close()
   })
 
   // Handle `Escape` to close
-  useEscape(isTopLayer, ownerDocument?.defaultView, (event) => {
+  useEscape(closeOnEscape && isTopLayer, ownerDocument?.defaultView, (event) => {
     event.preventDefault()
     event.stopPropagation()
 
@@ -371,7 +373,9 @@ export type DialogProps<TTag extends ElementType = typeof DEFAULT_DIALOG_TAG> = 
     role?: 'dialog' | 'alertdialog'
     autoFocus?: boolean
     transition?: boolean
-    inertEnabled?: boolean
+    inertEnabled?: boolean // 是否禁用其他元素的交互
+    closeOnClickOutside?: boolean // 是否点击外部关闭
+    closeOnEscape?: boolean // 是否按下ESC关闭
     __demoMode?: boolean
   }
 >
