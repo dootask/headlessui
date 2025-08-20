@@ -129,6 +129,7 @@ let InternalDialog = forwardRefWithAs(function InternalDialog<
     role = 'dialog',
     autoFocus = true,
     inertEnabled = true,
+    scrollLockEnabled = null,
     closeOnClickOutside = true,
     closeOnEscape = true,
     __demoMode = false,
@@ -267,8 +268,11 @@ let InternalDialog = forwardRefWithAs(function InternalDialog<
   })
 
   // Scroll lock
-  let scrollLockEnabled = __demoMode ? false : isClosing ? false : enabled
-  useScrollLock(scrollLockEnabled, ownerDocument, resolveRootContainers)
+  let finalScrollLockEnabled = __demoMode ? false : isClosing ? false : enabled
+  if (typeof scrollLockEnabled === 'boolean') {
+    finalScrollLockEnabled = scrollLockEnabled
+  }
+  useScrollLock(finalScrollLockEnabled, ownerDocument, resolveRootContainers)
 
   // Ensure we close the dialog as soon as the dialog itself becomes hidden
   useOnDisappear(enabled, internalDialogRef, close)
@@ -374,6 +378,7 @@ export type DialogProps<TTag extends ElementType = typeof DEFAULT_DIALOG_TAG> = 
     autoFocus?: boolean
     transition?: boolean
     inertEnabled?: boolean // 是否禁用其他元素的交互
+    scrollLockEnabled?: boolean | null // 是否禁用滚动锁，null 表示使用默认值
     closeOnClickOutside?: boolean // 是否点击外部关闭
     closeOnEscape?: boolean // 是否按下ESC关闭
     __demoMode?: boolean

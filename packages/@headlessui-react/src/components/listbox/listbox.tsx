@@ -547,6 +547,7 @@ export type ListboxOptionsProps<TTag extends ElementType = typeof DEFAULT_OPTION
     modal?: boolean
     transition?: boolean
     inertEnabled?: boolean
+    scrollLockEnabled?: boolean | null
   } & PropsForFeatures<typeof OptionsRenderFeatures>
 >
 
@@ -562,6 +563,7 @@ function OptionsFn<TTag extends ElementType = typeof DEFAULT_OPTIONS_TAG>(
     modal = true,
     transition = false,
     inertEnabled = true,
+    scrollLockEnabled = null,
     ...theirProps
   } = props
   let anchor = useResolvedAnchor(rawAnchor)
@@ -603,8 +605,11 @@ function OptionsFn<TTag extends ElementType = typeof DEFAULT_OPTIONS_TAG>(
   useOnDisappear(visible, buttonElement, machine.actions.closeListbox)
 
   // Enable scroll locking when the listbox is visible, and `modal` is enabled
-  let scrollLockEnabled = __demoMode ? false : modal && listboxState === ListboxStates.Open
-  useScrollLock(scrollLockEnabled, ownerDocument)
+  let finalScrollLockEnabled = __demoMode ? false : modal && listboxState === ListboxStates.Open
+  if (typeof scrollLockEnabled === 'boolean') {
+    finalScrollLockEnabled = scrollLockEnabled
+  }
+  useScrollLock(finalScrollLockEnabled, ownerDocument)
 
   // Mark other elements as inert when the listbox is visible, and `modal` is enabled
   let inertOthersEnabled =
