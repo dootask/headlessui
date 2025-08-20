@@ -11,7 +11,7 @@
     "playgrounds/*"
   ],
   "scripts": {
-    "react": "npm run --workspace=@headlessui/react",
+    "react": "npm run --workspace=@dootask/headlessui-react",
     "react-playground": "npm run --workspace=playground-react dev",
     "playground-react": "npm run --workspace=playground-react dev",
     "vue": "npm run --workspace=@headlessui/vue",

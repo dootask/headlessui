@@ -3,10 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "prebuild": "npm run build --workspace=@headlessui/react && npm run build --workspace=@headlessui/tailwindcss",
-    "predev": "npm run build --workspace=@headlessui/react && npm run build --workspace=@headlessui/tailwindcss",
+    "prebuild": "npm run build --workspace=@dootask/headlessui-react && npm run build --workspace=@headlessui/tailwindcss",
+    "predev": "npm run build --workspace=@dootask/headlessui-react && npm run build --workspace=@headlessui/tailwindcss",
     "dev:tailwindcss": "npm run watch --workspace=@headlessui/tailwindcss",
-    "dev:headlessui": "npm run watch --workspace=@headlessui/react",
+    "dev:headlessui": "npm run watch --workspace=@dootask/headlessui-react",
     "dev:next": "next dev",
     "dev": "npm-run-all -p dev:*",
     "build": "next build",
